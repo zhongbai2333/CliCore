@@ -1,0 +1,19 @@
+{
+    "id": "cli_core",
+    "version": "0.0.1",
+    "name": "CliCore",
+    "description": {
+        "en_us": "The Cli Control Tools Plugin for ConnectCore",
+        "zh_cn": "Connect的插件，用于提供高级命令控制台"
+    },
+    "author": "zhongbai233",
+    "link": "https://github.com/zhongbai2333/CliCore",
+    "dependencies": {},
+    "entrypoint": "cli_core.mcdr.mcdr_entry",
+    "archive_name": "CliCore-v{version}.mcdr",
+    "resources": [
+        "lang",
+        "connectcore.plugin.json",
+        "LICENSE"
+    ]
+}
