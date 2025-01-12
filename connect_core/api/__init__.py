@@ -2,6 +2,8 @@ from connect_core.api.interface import *
 from connect_core.api.plugin import *
 from connect_core.api.rsa import *
 from connect_core.api.tools import *
+from connect_core.api.data_packet import *
+from connect_core.api.account import *
 
 __all__ = [
     "CoreControlInterface",
@@ -18,9 +20,16 @@ __all__ = [
     "aes_decrypt",
     "restart_program",
     "check_file_exists",
-    "get_file_hash",
-    "verify_file_hash",
     "append_to_path",
-    "is_server",
-    "get_server_id",
+    "encode_base64",
+    "decode_base64",
+    "get_all_internal_ips",
+    "get_external_ip",
+    "get_plugins",
+    "new_thread",
+    "auto_trigger",
+    "DataPacket",
+    "analyze_password",
+    "get_password",
+    "get_register_password",
 ]

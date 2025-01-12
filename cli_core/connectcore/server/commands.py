@@ -1,6 +1,8 @@
 from connect_core.api.tools import restart_program, check_file_exists, append_to_path
 import os, sys
 from connect_core.api.interface import PluginControlInterface
+from connect_core.api.account import get_password
+from connect_core.api.tools import new_thread
 
 global _control_interface
 
@@ -73,6 +75,14 @@ def do_exit(args):
     _cli_core.running = False
 
 
+def do_getkey(args):
+    """
+    获取服务器的公钥
+    """
+    _control_interface.info(_control_interface.tr("server_commands.getkey").format(get_password()))
+
+
+@new_thread("CliCoreServer")
 def commands_main(control_interface: "PluginControlInterface"):
     """
     Server 命令行系统主程序
@@ -87,6 +97,7 @@ def commands_main(control_interface: "PluginControlInterface"):
     _cli_core.add_command("help", do_help)
     _cli_core.add_command("list", do_list)
     _cli_core.add_command("send", do_send)
+    _cli_core.add_command("getkey", do_getkey)
     _cli_core.add_command("reload", do_reload)
     _cli_core.add_command("exit", do_exit)
 
@@ -95,6 +106,7 @@ def commands_main(control_interface: "PluginControlInterface"):
             "help": None,
             "list": None,
             "send": {"msg": {"all": None}, "file": {"all": None}},
+            "getkey": None,
             "reload": None,
             "exit": None,
         }

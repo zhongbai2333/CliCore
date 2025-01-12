@@ -94,8 +94,7 @@ class CoreControlInterface:
 
 
 class PluginControlInterface(CoreControlInterface):
-
-    def __init__(self, sid: str, sinfo: dict, self_path: str, config_path: str):
+    def __init__(self, sid: str, self_path: str, config_path: str):
         """
         插件控制接口
 

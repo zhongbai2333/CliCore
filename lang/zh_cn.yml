@@ -10,6 +10,7 @@ cli_core:
     exit: 退出"
     send: "send <msg|file> <ID> <[msg]|[path]> 发送文件或消息"
     no_file: "没有这个文件！"
+    getkey: "服务器密钥为：{}"
   client_commands:
     help: "==help==\n
     help: 获取帮助列表\n

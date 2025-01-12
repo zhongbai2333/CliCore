@@ -1,5 +1,4 @@
 from connect_core.api.interface import PluginControlInterface
-import threading
 
 global _control_interface
 
@@ -17,13 +16,11 @@ def on_load(control_interface: "PluginControlInterface"):
     if _control_interface.is_server():
         from cli_core.connectcore.server.commands import commands_main
 
-        cli_thread = threading.Thread(target=commands_main, args=(_control_interface,))
-        cli_thread.start()
+        commands_main(_control_interface)
     else:
         from cli_core.connectcore.client.commands import commands_main
 
-        cli_thread = threading.Thread(target=commands_main, args=(_control_interface,))
-        cli_thread.start()
+        commands_main(_control_interface)
 
 
 def on_unload():
@@ -52,6 +49,7 @@ def flush_server_list(servers):
                 "help": None,
                 "list": None,
                 "send": {"msg": server_list, "file": server_list},
+                "getkey": None,
                 "reload": None,
                 "exit": None,
             }

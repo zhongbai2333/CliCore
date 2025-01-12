@@ -1,6 +1,7 @@
 from connect_core.api.tools import restart_program, check_file_exists, append_to_path
 import os
 from connect_core.api.interface import PluginControlInterface
+from connect_core.api.tools import new_thread
 
 global _control_interface
 
@@ -90,6 +91,7 @@ def do_exit(args):
     _cli_core.running = False
 
 
+@new_thread("CliCoreClient")
 def commands_main(control_interface: "PluginControlInterface"):
     """
     Client 命令行系统主程序
