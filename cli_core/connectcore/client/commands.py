@@ -91,6 +91,14 @@ def do_exit(args):
     _cli_core.running = False
 
 
+def do_get_history_packet(args):
+    """
+    获取历史数据包
+    """
+    for num, packet in enumerate(_control_interface.get_history_packet(args)):
+        _control_interface.info(f"{num + 1}. {packet}")
+
+
 @new_thread("CliCoreClient")
 def commands_main(control_interface: "PluginControlInterface"):
     """
@@ -110,19 +118,36 @@ def commands_main(control_interface: "PluginControlInterface"):
     _cli_core.add_command("reload", do_reload)
     _cli_core.add_command("exit", do_exit)
 
-    _cli_core.set_completer_words(
-        {
-            "help": None,
-            "info": None,
-            "list": None,
-            "send": {
-                "msg": {"all": None, "-----": None},
-                "file": {"all": None, "-----": None},
-            },
-            "reload": None,
-            "exit": None,
-        }
-    )
+    if _control_interface.get_config()["debug"]:
+        _cli_core.add_command("get_history_packet", do_get_history_packet)
+        _cli_core.set_completer_words(
+            {
+                "help": None,
+                "info": None,
+                "list": None,
+                "send": {
+                    "msg": {"all": None, "-----": None},
+                    "file": {"all": None, "-----": None},
+                },
+                "get_history_packet": None,
+                "reload": None,
+                "exit": None,
+            }
+        )
+    else:
+        _cli_core.set_completer_words(
+            {
+                "help": None,
+                "info": None,
+                "list": None,
+                "send": {
+                    "msg": {"all": None, "-----": None},
+                    "file": {"all": None, "-----": None},
+                },
+                "reload": None,
+                "exit": None,
+            }
+        )
 
     os.system(f"title ConnectCore Client")
 

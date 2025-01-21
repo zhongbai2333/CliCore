@@ -13,6 +13,10 @@ def on_load(control_interface: "PluginControlInterface"):
         )
     )
 
+    if not _control_interface.get_config():
+        config = {"debug": False}
+        _control_interface.save_config(config)
+
     if _control_interface.is_server():
         from cli_core.connectcore.server.commands import commands_main
 
@@ -42,18 +46,33 @@ def flush_server_list(servers):
         from cli_core.connectcore.server.commands import set_completer_words
 
         server_list = {"all": None}
+        debug_server_list = {}
         for i in servers:
             server_list[i] = None
-        set_completer_words(
-            {
-                "help": None,
-                "list": None,
-                "send": {"msg": server_list, "file": server_list},
-                "getkey": None,
-                "reload": None,
-                "exit": None,
-            }
-        )
+            debug_server_list[i] = None
+        if _control_interface.get_config()["debug"]:
+            set_completer_words(
+                {
+                    "help": None,
+                    "list": None,
+                    "send": {"msg": server_list, "file": server_list},
+                    "getkey": None,
+                    "reload": None,
+                    "get_history_packet": debug_server_list,
+                    "exit": None,
+                }
+            )
+        else:
+            set_completer_words(
+                {
+                    "help": None,
+                    "list": None,
+                    "send": {"msg": server_list, "file": server_list},
+                    "getkey": None,
+                    "reload": None,
+                    "exit": None,
+                }
+            )
 
     else:
         from cli_core.connectcore.client.commands import set_completer_words
@@ -62,18 +81,37 @@ def flush_server_list(servers):
         for i in servers:
             if i != _control_interface.get_server_id():
                 server_list[i] = None
-        set_completer_words(
-            {
-                "help": None,
-                "info": None,
-                "list": None,
-                "send": {
-                    "msg": server_list,
-                    "file": server_list,
-                },
-                "reload": None,
-                "exit": None,
-            }
-        )
+        if _control_interface.get_config()["debug"]:
+            set_completer_words(
+                {
+                    "help": None,
+                    "info": None,
+                    "list": None,
+                    "send": {
+                        "msg": server_list,
+                        "file": server_list,
+                    },
+                    "get_history_packet": None,
+                    "reload": None,
+                    "exit": None,
+                }
+            )
+        else:
+            set_completer_words(
+                {
+                    "help": None,
+                    "info": None,
+                    "list": None,
+                    "send": {
+                        "msg": server_list,
+                        "file": server_list,
+                    },
+                    "reload": None,
+                    "exit": None,
+                }
+            )
 
     set_server_list(servers)
+
+def recv_data(data):
+    _control_interface.info(data.get("msg", "N/A"))

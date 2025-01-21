@@ -163,3 +163,15 @@ class PluginControlInterface(CoreControlInterface):
             str: 服务器ID
         """
         pass
+
+    def get_history_packet(self, server_id: str = None) -> list:
+        """
+        获取历史数据包，客户端无需参数
+
+        Args:
+            server_id (str): 服务器ID
+
+        Returns:
+            dict: 数据包
+        """
+        pass

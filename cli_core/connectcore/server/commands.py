@@ -82,6 +82,18 @@ def do_getkey(args):
     _control_interface.info(_control_interface.tr("server_commands.getkey").format(get_password()))
 
 
+def do_get_history_packet(args):
+    """
+    获取历史数据包
+    """
+    if args:
+        _control_interface.info("==get_history_packet==")
+        for num, packet in enumerate(_control_interface.get_history_packet(args)):
+            _control_interface.info(f"{num + 1}. {packet}")
+    else:
+        _control_interface.info(_control_interface.tr("server_commands.none_server_id"))
+
+
 @new_thread("CliCoreServer")
 def commands_main(control_interface: "PluginControlInterface"):
     """
@@ -101,16 +113,30 @@ def commands_main(control_interface: "PluginControlInterface"):
     _cli_core.add_command("reload", do_reload)
     _cli_core.add_command("exit", do_exit)
 
-    _cli_core.set_completer_words(
-        {
-            "help": None,
-            "list": None,
-            "send": {"msg": {"all": None}, "file": {"all": None}},
-            "getkey": None,
-            "reload": None,
-            "exit": None,
-        }
-    )
+    if _control_interface.get_config()["debug"]:
+        _cli_core.add_command("get_history_packet", do_get_history_packet)
+        _cli_core.set_completer_words(
+            {
+                "help": None,
+                "list": None,
+                "send": {"msg": {"all": None}, "file": {"all": None}},
+                "getkey": None,
+                "get_history_packet": None,
+                "reload": None,
+                "exit": None,
+            }
+        )
+    else:
+        _cli_core.set_completer_words(
+            {
+                "help": None,
+                "list": None,
+                "send": {"msg": {"all": None}, "file": {"all": None}},
+                "getkey": None,
+                "reload": None,
+                "exit": None,
+            }
+        )
 
     os.system(f"title ConnectCore Server")
 
