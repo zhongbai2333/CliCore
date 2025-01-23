@@ -113,5 +113,5 @@ def flush_server_list(servers):
 
     set_server_list(servers)
 
-def recv_data(data):
-    _control_interface.info(data.get("msg", "N/A"))
+def recv_data(server_id, data):
+    _control_interface.info(f"[{server_id}] {data.get('msg', 'N/A')}")
