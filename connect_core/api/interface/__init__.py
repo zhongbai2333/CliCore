@@ -1,6 +1,7 @@
 class CoreControlInterface:
     def __init__(self):
         pass
+
     # =============
     #  Json Editer
     # =============
@@ -29,24 +30,26 @@ class CoreControlInterface:
     # =============
     #   Translate
     # =============
-    def translate(self, key: str) -> str:
+    def translate(self, key: str, *args) -> str:
         """
         获取翻译项
 
         Args:
             key (str): 翻译文件关键字
+            *args (tuple): 字段插入内容
 
         Returns:
             str: 翻译文本
         """
         pass
 
-    def tr(self, key: str) -> str:
+    def tr(self, key: str, *args):
         """
         获取翻译项 | `translate函数的别称`
 
         Args:
             key (str): 翻译文件关键字
+            *args (tuple): 字段插入内容
 
         Returns:
             str: 翻译文本
@@ -92,9 +95,21 @@ class CoreControlInterface:
         """
         pass
 
+    # =========
+    #   Tools
+    # =========
+    def is_server(self) -> bool:
+        """
+        判断是否为服务器
+
+        Returns:
+            bool: 是/否
+        """
+        pass
+
 
 class PluginControlInterface(CoreControlInterface):
-    def __init__(self, sid: str, self_path: str, config_path: str):
+    def __init__(self, sid: str, sinfo: dict, self_path: str, config_path: str):
         """
         插件控制接口
 
@@ -107,12 +122,6 @@ class PluginControlInterface(CoreControlInterface):
         # 导入
         super().__init__()
 
-        self.sid = ""
-        self.sinfo = {}
-        self.self_path = ""
-        self.config_path = ""
-        self.log_system = False
-        self.language = ""
         pass
 
     # ========
@@ -146,15 +155,6 @@ class PluginControlInterface(CoreControlInterface):
     # =========
     #   Tools
     # =========
-    def is_server(self) -> bool:
-        """
-        判断是否为服务器
-
-        Returns:
-            bool: 是/否
-        """
-        pass
-
     def get_server_id(self) -> str:
         """
         客户端反馈服务器ID
@@ -164,7 +164,7 @@ class PluginControlInterface(CoreControlInterface):
         """
         pass
 
-    def get_history_packet(self, server_id: str = None) -> list:
+    def get_history_packet(self, server_id: str = None) -> list | None:
         """
         获取历史数据包，客户端无需参数
 

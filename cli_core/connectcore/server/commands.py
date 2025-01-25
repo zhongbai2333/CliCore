@@ -79,7 +79,9 @@ def do_getkey(args):
     """
     获取服务器的公钥
     """
-    _control_interface.info(_control_interface.tr("server_commands.getkey").format(get_password()))
+    _control_interface.info(
+        _control_interface.tr("server_commands.getkey", get_password())
+    )
 
 
 def do_get_history_packet(args):

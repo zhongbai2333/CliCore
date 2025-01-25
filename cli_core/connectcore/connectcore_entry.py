@@ -8,8 +8,8 @@ def on_load(control_interface: "PluginControlInterface"):
     _control_interface = control_interface
 
     _control_interface.info(
-        _control_interface.tr("started.finish").format(
-            _control_interface.sinfo["version"]
+        _control_interface.tr(
+            "started.finish", "0.0.1"
         )
     )
 

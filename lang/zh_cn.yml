@@ -1,4 +1,6 @@
 cli_core:
+  mcdr:
+    get_help: "获取帮助列表"
   started:
     finish: "CliCore v{} 加载成功"
   server_commands:
@@ -6,6 +8,7 @@ cli_core:
     help: 获取帮助列表\n
     list: 获取子服务器列表\n
     send: 发送消息或文件\n
+    getkey: 获取服务器密钥\n
     reload: 重载程序和插件\n
     exit: 退出"
     send: "send <msg|file> <ID> <[msg]|[path]> 发送文件或消息"
