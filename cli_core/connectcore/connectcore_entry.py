@@ -40,7 +40,7 @@ def del_connect(servers):
 
 
 def flush_server_list(servers):
-    from cli_core.connectcore.global_data import set_server_list
+    from cli_core.global_data import set_server_list
 
     if _control_interface.is_server():
         from cli_core.connectcore.server.commands import set_completer_words

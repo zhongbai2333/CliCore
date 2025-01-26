@@ -1,5 +1,6 @@
 from mcdreforged.api.all import *
 from connect_core.api.interface import PluginControlInterface
+from connect_core.api.tools import check_file_exists
 
 
 class CommandActions(object):
@@ -68,23 +69,31 @@ class CommandActions(object):
 
     def _handle_list(self, source: CommandSource):
         if self._is_server:
-            from cli_core.connectcore.global_data import get_server_list
+            from cli_core.global_data import get_server_list
 
             source.reply("==list==")
             for num, key in enumerate(get_server_list()):
                 source.reply(f"{num + 1}. {key}")
         else:
-            from cli_core.connectcore.global_data import get_server_list
+            from cli_core.global_data import get_server_list
 
             source.reply("==list==")
             for num, key in enumerate(get_server_list()):
                 source.reply(f"{num + 1}. {key}")
 
     def _handle_send_msg(self, source: CommandSource, context: CommandContext):
-        pass
+        self._control_interface.send_data(context["server_id"], "cli_core", {"msg": context["message"]})
 
     def _handle_send_file(self, source: CommandSource, context: CommandContext):
-        pass
+        if check_file_exists(context["save_path"]):
+            self._control_interface.send_file(
+                context["server_id"],
+                "cli_core",
+                context["path"],
+                context["save_path"],
+            )
+        else:
+            self._control_interface.info(self._control_interface.tr("server_commands.no_file"))
 
     def _handle_getkey(self, source: CommandSource):
         from connect_core.api.account import get_password
@@ -94,4 +103,4 @@ class CommandActions(object):
         )
 
     def _handle_reload(self, source: CommandSource):
-        pass
+        self.__mcdr_server.reload_plugin("cli_core")

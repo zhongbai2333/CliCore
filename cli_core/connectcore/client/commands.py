@@ -22,7 +22,7 @@ def do_list(args):
     """
     显示当前可用的子服务器列表。
     """
-    from cli_core.connectcore.global_data import get_server_list
+    from cli_core.global_data import get_server_list
 
     _control_interface.info("==list==")
     for num, key in enumerate(get_server_list()):
@@ -33,7 +33,7 @@ def do_send(args):
     """
     向指定服务器发送消息或文件。
     """
-    from cli_core.connectcore.global_data import get_server_list
+    from cli_core.global_data import get_server_list
 
     commands = args.split()
     if len(commands) < 3:
